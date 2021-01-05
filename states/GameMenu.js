@@ -12,6 +12,14 @@ GameMenu.prototype = {
     },
 
     preload: function () {
+        nameInput.addEventListener('input', function() {
+            if(nameInput.value.length != 0) {
+                nameInput.className = "";
+            }
+            else {
+                nameInput.className = "danger";
+            }
+        });
     },
   
     create: function () {
@@ -23,14 +31,28 @@ GameMenu.prototype = {
         // looks like we have to create a style for or menu option
         var optionStyle = { font: '60pt PixelLife', fill: 'white', align: 'left' };
         // the text for start
-        var txt = game.add.text(game.width/2, game.height - 200, 'Play', optionStyle);
+        var txt = game.add.text(game.width/2, game.height - 50, 'Play', optionStyle);
         txt.anchor.setTo(0.5);
         txt.setShadow(3, 3, 'rgba(0,0,0,0.2)', 5);
         // so how do we make it clickable?  We have to use .inputEnabled!
         txt.inputEnabled = true;
         // Now every time we click on it, it says "You did it!" in the console!
         txt.events.onInputUp.add(function () { 
-            game.state.start('Game');
+            // Form validation
+            if(nameInput.value.length === 0) {
+                nameInput.className = "danger";
+                hintValidation.innerHTML = 'The name is mandatory.';
+            }
+            else if(ballInput.files.length > 0) {
+                if(ballInput.files[0].type == 'image/jpeg' && ballInput.files[0].type == 'image/png') {
+                    nameInput.className = "danger";
+                    hintValidation.innerHTML = 'The ball image has to be .png or .jpeg.';
+                }
+            }
+            else {
+                this.newBallTexture = startForm.querySelector('#preview') ? startForm.querySelector('#preview').src : '';
+                game.state.start('Game');
+            }
         });
         // Hover event
         txt.events.onInputOver.add(function (target) {
@@ -41,5 +63,8 @@ GameMenu.prototype = {
             target.fill = "white";
             target.setShadow(3, 3, 'rgba(0,0,0,0.2)', 5);
         });
+
+        // Show form
+        startForm.style.display = 'block';
     }
 }

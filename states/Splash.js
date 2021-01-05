@@ -43,6 +43,46 @@ Splash.prototype = {
 
         this.loadScripts();
         this.loadFonts();
+
+        // Display the progress bars at the right place
+        inputPower.style.top = game.height - 50 + 'px';
+        inputPower.style.left = game.height/2 + 'px';
+
+        inputAngle.style.top = game.height/2 + 'px';
+        inputAngle.style.left = '-125px';
+
+        // Form
+        startForm.style.top = game.height/2 + 25 + 'px';
+        startForm.style.left = game.width/2 + 'px';
+        // prevent submit
+        startForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+        });
+        // Ball image input
+        ballInput.addEventListener('input', function(e) {
+            var imageType = /^image\//;
+            var file = ballInput.files[0];
+            if (!imageType.test(file.type)) {
+                hintValidation.innerHTML = 'Only images with .png or .jp(e)g extensions are accepted.';
+            }
+            else {
+                ballInputLabel.innerHTML = '';
+                var img = document.createElement("img");
+                img.id = 'preview';
+                ballInputLabel.appendChild(img); 
+                ballInputLabel.innerHTML += ' ' + file.name;
+                
+                img.src = window.URL.createObjectURL(file);
+                img.onload = function () {
+                    // If it's not a square
+                    if(this.height !== this.width) {
+                        hintValidation.innerHTML = 'The image has to be a square';
+                    }
+
+                    window.URL.revokeObjectURL(this.src);
+                };
+            }
+        });
     },
 
     create: function() {
