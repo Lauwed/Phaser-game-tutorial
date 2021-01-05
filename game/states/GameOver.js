@@ -5,11 +5,12 @@ GameOver.prototype = {
         // Hide inputs
         inputAngle.style.display = 'none';
         inputPower.style.display = 'none';
-
-        // Clear time record
-        clearInterval(this.timeRecords);
     },
     create: function() {
+        console.log( this)
+        // Clear time record
+        window.clearInterval(this.timeRecords);
+
         this.game.stage.backgroundColor = '#000000';
 
         // looks like we have to create a style for or menu option

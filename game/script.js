@@ -18,7 +18,7 @@
 // // TODO : Add a favicon
 // TODO : Rename the vars
 // TODO : Add comments
-// TODO : Record time : Call API every 0.5sec
+// TODO : Record time : Call API every 0.5sec ; L'interval ne veut pas s'arreter ?
 
 // TODO : in Vue app ?
 

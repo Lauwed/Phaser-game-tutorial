@@ -173,9 +173,10 @@ Game.prototype = {
                 this.shootball();
             }
             else {
-                if(inputAngle.value < 5) game.state.start('GameOver');
+                if(inputAngle.value - 90 > 85) game.state.start('GameOver');
 
                 clearInterval(this.angleVariation);
+                console.log(inputAngle.value - 90);
     
                 clearInterval(this.forceVariation);
                 // The variation of the force
