@@ -261,7 +261,6 @@ Game.prototype = {
         this.msgBox = game.add.group();
         //make the back of the message box
         var back = game.add.sprite(0, 0, "boxBack"); // Position must 0,0 because position is relative to msgBox
-        console.log(back)
         // The title
         var title = game.add.text(0, 0, titleText, { font: '30pt PixelLife', fill: 'black', align: 'left' });
         //make a text field
@@ -321,8 +320,6 @@ Game.prototype = {
                 }
                 this.ballRock.angle = inputAngle.value - 90;
             }.bind(this), SPEEDRANGE);
-            // Add the eventListener of the angle input
-            // TODO
         }.bind(this));
         // Hover event
         okButton.events.onInputOver.add(function (target) {

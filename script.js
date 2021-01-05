@@ -14,7 +14,7 @@
 
 // TODO : Indicate where API calls has to be made
 
-// TODO : Add a lightbox How 2 play
+// // TODO : Add a lightbox How 2 play
 // TODO : Add a favicon
 // TODO : Rename the vars
 // TODO : Add comments
