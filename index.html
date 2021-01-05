@@ -5,76 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Tutorial Phaser</title>
 
-    <style>
-        body {
-            font-family: 'PixelLife';
-            font-size: 2rem;
-        }
-
-        #form {
-            position: absolute;
-            transform: translate(-50%, -50%);
-            display: none;
-
-            background-color: white;
-            padding: 2rem;
-        }
-        #country {
-            font-family: 'PixelLife';
-            font-size: 2rem;
-        }
-        #sprite {
-            display: none;
-        }
-        #labelSprite {
-            text-align: center;
-            display: block;
-            border: 2px solid black;
-            width: 70%;
-            margin: 2rem auto 0;
-            cursor: pointer;
-            padding: .5rem 1rem;
-
-            display:flex;
-            align-items: center;
-        }
-        #preview {
-            height: 40px;
-            width: 40px;
-            object-fit: contain;
-            margin-right: 1rem;
-        }
-        #hint {
-            margin: 1rem 0 0;
-            text-align: center;
-            color: red;
-        }
-        .danger {
-            border-color: red;
-            background-color: lightcoral;
-        }
-        input, select {
-            padding: .5rem 1rem;
-            font-size: 2rem;
-            border: 2px solid black;
-            border-radius: 0;
-            font-family: 'PixelLife';
-        }
-        #angle, #power {
-            position: absolute;
-            display: none;
-        }
-        #angle {
-            transform: translateY(-50%) rotate(-90deg);
-            top: 50px;
-            left: 5px;
-        }
-        #power {
-            transform: translateX(-50%);
-            top: 500px;
-            left: 100px;
-        }
-    </style>
+    <link rel="stylesheet" href="style/style.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.6.2/phaser.min.js"></script>
 </head>
