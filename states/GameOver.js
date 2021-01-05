@@ -5,6 +5,9 @@ GameOver.prototype = {
         // Hide inputs
         inputAngle.style.display = 'none';
         inputPower.style.display = 'none';
+
+        // Clear time record
+        clearInterval(this.timeRecords);
     },
     create: function() {
         this.game.stage.backgroundColor = '#000000';

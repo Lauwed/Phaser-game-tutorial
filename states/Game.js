@@ -96,8 +96,6 @@ Game.prototype = {
         //  Stop the following keys from propagating up to the browser
         this.game.input.keyboard.addKeyCapture([ Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.Keyboard.SPACEBAR ]);
 
-        this.cursors = game.input.keyboard.createCursorKeys();
-
         // Show the how to play box
         this.howToPlayBox();
     },
@@ -191,7 +189,6 @@ Game.prototype = {
                         if(inputPower.value == MINFORCE) ascendingRange = true;
                     }
                     force = inputPower.value*20;
-                    //console.log(force)
                 }, SPEEDRANGE);
     
                 isAngle = true;
@@ -306,10 +303,22 @@ Game.prototype = {
             // Hide the box
             this.hideBox();
 
+            // Start time record
+            // Stock actual time
+            this.startTime = Date.now();
+            // Record time every 0.5 seconds
+            this.timeRecords = window.setInterval(function() {
+                // Get time elapsed
+                let timeElapsed = Math.floor(Date.now() - this.startTime / 1000);
+                console.log(timeElapsed, Date.now(), this.startTime);
+
+                // API Call
+                // TODO
+            }.bind(this), 500);
+
             // Start interval
             // The variation of the angle
             this.angleVariation = window.setInterval(function() {
-                console.log(inputAngle.value)
                 if(inputAngle.value >= MINANGLE && inputAngle.value < MAXANGLE && ascendingRange) {
                 inputAngle.value = parseInt(inputAngle.value) + 1;
                 if(inputAngle.value == MAXANGLE) ascendingRange = false;

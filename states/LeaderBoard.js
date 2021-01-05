@@ -7,6 +7,9 @@ LeaderBoard.prototype = {
         inputPower.style.display = 'none';
     },
     create: function() {
+        // Clear time record
+        clearInterval(this.timeRecords);
+
         // looks like we have to create a style for or menu option
         var optionStyle = { font: '60pt PixelLife', fill: 'white', align: 'left' };
         // the text for Congratulations
