@@ -9,5 +9,5 @@ class Session extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['Name', 'CountryCode', 'BallImage', 'score'];
+    protected $fillable = ['Name', 'CountryCode', 'BallImage', 'score', 'total_time'];
 }

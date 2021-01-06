@@ -6,6 +6,12 @@ let isUp = true;
 var Game = function() {};
 
 Game.prototype = {
+    preload: function() {
+        // Load the custom texture if the player uploaded one
+        if(startForm.querySelector('#preview')) {
+            this.game.load.image('ball', startForm.querySelector('#preview').src);
+        }
+    },
     create: function() {
         //  Make the world larger than the actual canvas
         this.game.world.setBounds(0, 0, 1000000, 2000);
@@ -32,15 +38,16 @@ Game.prototype = {
         this.GRAVITY = 980; // pixels/second/second
 
         // Catapult
-        if(this.newBellTexture) this.game.load.image('custom-catapult', this.newBallTexture);
-        this.catapult = this.game.add.sprite(150, this.game.world.height - 125, this.newBallTexture ? 'custom-catapult' : 'catapult');
+        this.catapult = this.game.add.sprite(150, this.game.world.height - 125, 'catapult');
         this.catapult.anchor.setTo(0.5, 0.5);
         this.catapult.scale.setTo(0.5, 0.5);
 
         this.catapult.animations.add('run');
 
         // Create an object representing our ballRock
-        this.ballRock = this.game.add.sprite(55, this.game.world.height - 130, 'ball');
+        this.ballRock = this.game.add.sprite(55, this.game.world.height - 130, 'ball')
+        this.ballRock.width = 40;
+        this.ballRock.height = 40;
         this.ballRock.anchor.setTo(0.5, 0.5); // Set the pivot point to the center of the ballRock
         this.ballRock.angle = -45;
 
@@ -48,6 +55,8 @@ Game.prototype = {
         this.ballPool = this.game.add.group();
         // Create each ball and add it to the group.
         this.ball = this.game.add.sprite(0, 0, 'ball');
+        this.ball.width = 40;
+        this.ball.height = 40;
 
         // Set its pivot point to the center of the ball
         this.ball.anchor.setTo(0.5, 0.5);

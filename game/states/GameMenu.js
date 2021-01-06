@@ -43,14 +43,11 @@ GameMenu.prototype = {
                 nameInput.className = "danger";
                 hintValidation.innerHTML = 'The name is mandatory.';
             }
-            else if(ballInput.files.length > 0) {
-                if(ballInput.files[0].type == 'image/jpeg' && ballInput.files[0].type == 'image/png') {
+            else if(ballInput.files.length > 0 && (ballInput.files[0].type == 'image/jpeg' && ballInput.files[0].type == 'image/png')) {
                     nameInput.className = "danger";
                     hintValidation.innerHTML = 'The ball image has to be .png or .jpeg.';
-                }
             }
             else {
-                this.newBallTexture = startForm.querySelector('#preview') ? startForm.querySelector('#preview').src : '';
                 game.state.start('Game');
             }
         });

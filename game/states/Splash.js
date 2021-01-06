@@ -73,11 +73,10 @@ Splash.prototype = {
                 reader.onload = function(e) {
                     var img = document.createElement("img");
                     img.id = 'preview';
-                    ballInputLabel.appendChild(img); 
-                    ballInputLabel.innerHTML += ' ' + file.name;
 
                     img.onload = function () {
-                        console.log(this);
+                        hintValidation.innerHTML = '';
+
                         // If it's not a square
                         if(this.height !== this.width) {
                             hintValidation.innerHTML = 'The image has to be a square';
@@ -87,6 +86,8 @@ Splash.prototype = {
                     };
 
                     img.src = e.target.result;
+                    ballInputLabel.appendChild(img); 
+                    ballInputLabel.innerHTML += ' ' + file.name;
                 }
 
                 reader.readAsDataURL(file);

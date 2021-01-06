@@ -14,7 +14,7 @@ class StatusController extends Controller
      */
     public function index()
     {
-        //
+        return Status::all();
     }
 
     /**
@@ -25,7 +25,9 @@ class StatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $status = Status::create($request->all());
+
+        return response()->json($status, 201);
     }
 
     /**
@@ -36,7 +38,7 @@ class StatusController extends Controller
      */
     public function show(Status $status)
     {
-        //
+        return $status;
     }
 
     /**
@@ -48,7 +50,7 @@ class StatusController extends Controller
      */
     public function update(Request $request, Status $status)
     {
-        //
+        return response()->json($status->update($request->all()), 200);
     }
 
     /**
@@ -59,6 +61,6 @@ class StatusController extends Controller
      */
     public function destroy(Status $status)
     {
-        //
+        return response()->json($status->delete(), 204);
     }
 }

@@ -14,7 +14,7 @@ class BallThrowController extends Controller
      */
     public function index()
     {
-        //
+        return BallThrow::all();
     }
 
     /**
@@ -25,7 +25,9 @@ class BallThrowController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ballThrow = BallThrow::create($request->all());
+
+        return response()->json($ballThrow, 201);
     }
 
     /**
@@ -36,7 +38,7 @@ class BallThrowController extends Controller
      */
     public function show(BallThrow $ballThrow)
     {
-        //
+        return $ballThrow;
     }
 
     /**
@@ -48,7 +50,7 @@ class BallThrowController extends Controller
      */
     public function update(Request $request, BallThrow $ballThrow)
     {
-        //
+        return response()->json($ballThrow->update($ballThrow->all()), 200);
     }
 
     /**
@@ -59,6 +61,6 @@ class BallThrowController extends Controller
      */
     public function destroy(BallThrow $ballThrow)
     {
-        //
+        return response()->json($ballThrow->delete(), 204);
     }
 }

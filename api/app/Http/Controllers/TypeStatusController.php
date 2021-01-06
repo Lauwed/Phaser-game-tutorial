@@ -14,7 +14,7 @@ class TypeStatusController extends Controller
      */
     public function index()
     {
-        //
+        return TypeStatus::all();
     }
 
     /**
@@ -25,7 +25,9 @@ class TypeStatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $typeStatus = TypeStatus::create($request->all());
+
+        return response()->json($typeStatus, 201);
     }
 
     /**
@@ -36,7 +38,7 @@ class TypeStatusController extends Controller
      */
     public function show(TypeStatus $typeStatus)
     {
-        //
+        return $typeStatus;
     }
 
     /**
@@ -48,7 +50,7 @@ class TypeStatusController extends Controller
      */
     public function update(Request $request, TypeStatus $typeStatus)
     {
-        //
+        return response()->json($typeStatus->updqte($request->all()), 200);
     }
 
     /**
@@ -59,6 +61,6 @@ class TypeStatusController extends Controller
      */
     public function destroy(TypeStatus $typeStatus)
     {
-        //
+        return response()->json($typeStatus->delete(), 204);
     }
 }

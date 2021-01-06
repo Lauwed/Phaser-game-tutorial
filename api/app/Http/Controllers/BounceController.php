@@ -14,7 +14,7 @@ class BounceController extends Controller
      */
     public function index()
     {
-        //
+        return Bounce::all();
     }
 
     /**
@@ -25,7 +25,7 @@ class BounceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $bounce = Bounce::create($request->all());
     }
 
     /**
@@ -36,7 +36,7 @@ class BounceController extends Controller
      */
     public function show(Bounce $bounce)
     {
-        //
+        return $bounce;
     }
 
     /**
@@ -48,7 +48,7 @@ class BounceController extends Controller
      */
     public function update(Request $request, Bounce $bounce)
     {
-        //
+        return response()->json($bounce->update($request->all()), 200);
     }
 
     /**
@@ -59,6 +59,6 @@ class BounceController extends Controller
      */
     public function destroy(Bounce $bounce)
     {
-        //
+        return response()->json($bounce->delete(), 204);
     }
 }
