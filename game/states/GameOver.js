@@ -7,9 +7,8 @@ GameOver.prototype = {
         inputPower.style.display = 'none';
     },
     create: function() {
-        console.log( this)
         // Clear time record
-        window.clearInterval(this.timeRecords);
+        clearInterval(game.timeRecords);
 
         this.game.stage.backgroundColor = '#000000';
 
@@ -24,9 +23,9 @@ GameOver.prototype = {
         restart.anchor.setTo(0.5);
         restart.inputEnabled = true;
         restart.events.onInputUp.add(function () { 
-            game.state.restart('GameMenu');
+            this.resetGame();
             game.state.start('GameMenu');
-        });
+        }.bind(this));
         // Hover event
         restart.events.onInputOver.add(function (target) {
             target.fill = "green";
@@ -36,5 +35,25 @@ GameOver.prototype = {
             target.fill = "white";
             target.setShadow(3, 3, 'rgba(0,0,0,0.2)', 5);
         });
+    },
+    resetGame: function() {
+        score = 0;
+        ascendingRange = true;
+        isShoot = false; // When the force and angle has been choosen
+        isAngle = false; // When the force has been choosen
+        isThrown = false;
+        angle = 180;
+        force = 0;
+        ascending = false;
+        currentSpeed = 0;
+        isUp = true;
+
+        console.log(game)
+
+        clearInterval(game.angleVariation);
+        clearInterval(game.forceVariation);
+
+        inputPower.value = force;
+        inputAngle.value = angle;
     }
 }

@@ -10,15 +10,15 @@
 
 // TODO : Win screen : leader bord top 5 ; button to return start screen
 // // TODO : Game over screen ; outside screen ; angle -5deg or/and power -30%
-// TODO : game over screen => Restart game beug
+// // TODO : game over screen => Restart game beug
 
 // TODO : Indicate where API calls has to be made
 
 // // TODO : Add a lightbox How 2 play
 // // TODO : Add a favicon
-// TODO : Rename the vars
-// TODO : Add comments
-// TODO : Record time : Call API every 0.5sec ; L'interval ne veut pas s'arreter ?
+// // TODO : Rename the vars
+// // TODO : Add comments
+// // TODO : Record time : Call API every 0.5sec ; L'interval ne veut pas s'arreter ?
 
 // TODO : in Vue app ?
 

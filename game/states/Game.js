@@ -176,7 +176,7 @@ Game.prototype = {
         if (this.spaceKey.isDown) {
             if(isShoot) {
                 if(inputPower.value < 30) game.state.start('GameOver');
-                clearInterval(this.forceVariation);
+                clearInterval(game.forceVariation);
     
                 this.catapult.animations.play('run', 15, false);
                 this.shootball();
@@ -184,12 +184,12 @@ Game.prototype = {
             else {
                 if(inputAngle.value - 90 > 85) game.state.start('GameOver');
 
-                clearInterval(this.angleVariation);
+                clearInterval(game.angleVariation);
                 console.log(inputAngle.value - 90);
     
-                clearInterval(this.forceVariation);
+                clearInterval(game.forceVariation);
                 // The variation of the force
-                this.forceVariation = window.setInterval(() => {
+                game.forceVariation = window.setInterval(() => {
                     if(inputPower.value >= MINFORCE && inputPower.value < MAXFORCE && ascendingRange) {
                         inputPower.value = parseInt(inputPower.value) + 1;
                         if(inputPower.value == MAXFORCE) ascendingRange = false;
@@ -224,7 +224,7 @@ Game.prototype = {
         this.lastballShotAt = this.game.time.now;
     
         this.ballRock.visible = false;
-        clearInterval(this.angleVariation);
+        clearInterval(game.angleVariation);
     
         // If there aren't any balls available then don't shoot
         if (this.ball === null || this.ball === undefined) return;
@@ -317,7 +317,7 @@ Game.prototype = {
             // Stock actual time
             this.startTime = Date.now();
             // Record time every 0.5 seconds
-            this.timeRecords = window.setInterval(function() {
+            game.timeRecords = window.setInterval(function() {
                 // Get time elapsed
                 let timeElapsed = Math.floor(Date.now() - this.startTime / 1000);
                 console.log(timeElapsed, Date.now(), this.startTime);
@@ -328,7 +328,7 @@ Game.prototype = {
 
             // Start interval
             // The variation of the angle
-            this.angleVariation = window.setInterval(function() {
+            game.angleVariation = window.setInterval(function() {
                 if(inputAngle.value >= MINANGLE && inputAngle.value < MAXANGLE && ascendingRange) {
                 inputAngle.value = parseInt(inputAngle.value) + 1;
                 if(inputAngle.value == MAXANGLE) ascendingRange = false;
