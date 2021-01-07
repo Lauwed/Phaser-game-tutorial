@@ -25,7 +25,6 @@ body {
   text-align: center;
   display: block;
   border: 2px solid black;
-  font-size: 1.5rem;
   width: 70%;
   margin: 2rem auto 0;
   cursor: pointer;
@@ -82,5 +81,35 @@ input, select {
           transform: translateX(-50%);
   top: 500px;
   left: 100px;
+}
+
+.leader {
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  top: 500px;
+  left: 100px;
+  display: none;
+  background-color: white;
+  padding: .5rem 1rem;
+  width: 60%;
+}
+
+.leader__row--1 {
+  background-color: gold;
+}
+
+.leader__row--2 {
+  background-color: silver;
+}
+
+.leader__row--3 {
+  background-color: firebrick;
+}
+
+.leader__row--current {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  border: 2px solid black;
 }
 /*# sourceMappingURL=style.css.map */

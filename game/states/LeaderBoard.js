@@ -26,8 +26,36 @@ LeaderBoard.prototype = {
         leaderBoardTxt.anchor.setTo(0.5);
         // Show table
         // Fetch API
-        // Build the table
-        // TODO
+        // Get the top 5
+        fetch(leaderBoardGameUrl)
+        .then(response => response.json())
+        .then(function(result) {
+            var sessions = (Object.values(result)).sort((a, b) => (a.score < b.score) ? 1 : -1); // Get all the sessions
+
+            // Get only the game won
+            var index = 0;
+            for(var i = 0; i <= sessions.length; i++) {
+                if(sessions[i].score == null) {
+                    index = i-1; // Get index of the last won game
+                    break;
+                }
+            }
+
+            var leaderBoard = index >= 5 ? sessions.slice(0, 5) : sessions.slice(0, index+1); // Get the top 5
+
+            var isTop5 = leaderBoard.filter(function(session) {
+                if(session.id == game.session.id) return true;
+            }).length >= 1; // If the current session is in the top 5
+
+            // Display the table
+            leaderBoardTable.style.display = 'block';
+            // Center the table
+            leaderBoardTable.style.top = game.height / 2;
+            leaderBoardTable.style.left = game.width / 2;
+            // Build the table
+            this.buildTable(leaderBoard, isTop5);
+        }.bind(this))
+        .catch(error => console.log('error', error));
 
         // the text for restart
         var restart = game.add.text(game.width/2, game.height - 100, 'Restart', { font: '30pt PixelLife', fill: 'white', align: 'left' });
@@ -36,7 +64,7 @@ LeaderBoard.prototype = {
         restart.events.onInputUp.add(function () { 
             this.resetGame();
             game.state.start('GameMenu');
-        });
+        }.bind(this));
         // Hover event
         restart.events.onInputOver.add(function (target) {
             target.fill = "green";
@@ -66,5 +94,15 @@ LeaderBoard.prototype = {
 
         inputPower.value = force;
         inputAngle.value = angle;
+    },
+    buildTable: function(leaderBoard, isTop5) {
+        leaderBoardTable.innerHTML = '';
+
+        leaderBoard.forEach(function(session, index) {
+            if(isTop5 && session.id == game.session.id) leaderBoardTable.innerHTML += `<tr class="leader__row leader__row--${index+1} leader__row--current"><td><!-- img --></td><td>${session.Name}</td><td>${session.score}</td></tr>`;
+            else leaderBoardTable.innerHTML += `<tr class="leader__row leader__row--${index+1}"><td><!-- img --></td><td>${session.Name}</td><td>${session.score}</td></tr>`;
+        });
+
+        if(!isTop5) leaderBoardTable.innerHTML += `<tr class="leader__row leader__row--current"><td><!-- img --></td><td>${game.session.Name}</td><td>${game.session.score}</td></tr>`;
     }
 };

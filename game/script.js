@@ -14,24 +14,35 @@
 
 // TODO : Indicate where API calls has to be made
 
+// TODO : si API fonctionne pas => Creer fauses donnees et simuler leader board
+
+// TODO : Stoquer image ball
+
 // // TODO : Add a lightbox How 2 play
 // // TODO : Add a favicon
 // // TODO : Rename the vars
 // // TODO : Add comments
 // // TODO : Record time : Call API every 0.5sec ; L'interval ne veut pas s'arreter ?
 
-// TODO : in Vue app ?
+// // TODO : Step by step method to create for day j
 
-// TODO : Step by step method to create for day j
-
+// API
+var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+var saveGameUrl = 'http://127.0.0.1:8000/api/start-game';
+var throwGameUrl = 'http://127.0.0.1:8000/api/save-throw';
+var flightGameUrl = 'http://127.0.0.1:8000/api/in-flight';
+var gameOverGameUrl = 'http://127.0.0.1:8000/api/game-over';
+var bounceGameUrl = 'http://127.0.0.1:8000/api/bounce';
+var winGameUrl = 'http://127.0.0.1:8000/api/save-distance';
+var leaderBoardGameUrl = 'http://127.0.0.1:8000/api/leader-board';
 
 // Handle the input range
-let inputPower = document.querySelector('#power');
-let inputAngle = document.querySelector('#angle');
-let ascendingRange = true;
-let isShoot = false; // When the force and angle has been choosen
-let isAngle = false; // When the force has been choosen
-let isThrown = false;
+var inputPower = document.querySelector('#power');
+var inputAngle = document.querySelector('#angle');
+var ascendingRange = true;
+var isShoot = false; // When the force and angle has been choosen
+var isAngle = false; // When the force has been choosen
+var isThrown = false;
 
 // Form on start menu
 var nameInput = document.querySelector('#name');
@@ -42,7 +53,7 @@ var startForm = document.querySelector('#form');
 var hintValidation = document.querySelector('#hint');
 
 // Leader board
-var leaderBoard = document.querySelector('#leaderBoard');
+var leaderBoardTable = document.querySelector('#leaderBoard');
 
 // Final score
 var score = 0;
@@ -77,7 +88,7 @@ GameState.prototype.preload = function() {
     this.game.load.image('mountains', 'assets/sky/glacial_mountains.png')
     this.game.load.image('clouds', 'assets/sky/clouds_mg_2.png')
     this.game.load.image('ground', 'assets/platform.png');
-    this.game.load.image('ball', 'assets/tennisball.png');
+    this.game.load.image('ball', 'assets/balls/tennisball.png');
     this.game.load.spritesheet('catapult', 
         'assets/catapult.png',
         515, 520

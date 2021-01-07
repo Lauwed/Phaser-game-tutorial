@@ -86,6 +86,7 @@ Splash.prototype = {
                     };
 
                     img.src = e.target.result;
+                    img.dataset.name = file.name;
                     ballInputLabel.appendChild(img); 
                     ballInputLabel.innerHTML += ' ' + file.name;
                 }

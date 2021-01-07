@@ -66,3 +66,31 @@ input, select {
     top: 500px;
     left: 100px;
 }
+
+.leader {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 500px;
+    left: 100px;
+    display: none;
+
+    background-color: white;
+    padding: .5rem 1rem;
+    width: 60%;
+
+    &__row {
+        &--1 {
+            background-color: gold;
+        }
+        &--2 {
+            background-color: silver;
+        }
+        &--3 {
+            background-color: firebrick;
+        }
+        &--current {
+            transform: scale(1.1);
+            border: 2px solid black;
+        }
+    }
+}

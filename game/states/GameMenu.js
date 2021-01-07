@@ -48,6 +48,35 @@ GameMenu.prototype = {
                     hintValidation.innerHTML = 'The ball image has to be .png or .jpeg.';
             }
             else {
+                // Save a session
+                var startHeaders = new Headers();
+                startHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+                var startUrlencoded = new URLSearchParams();
+                startUrlencoded.append("Name", nameInput.value);
+                startUrlencoded.append("CountryCode", countryInput.value);
+                startUrlencoded.append("BallImage", document.querySelector('#preview') ? 'assets/balls/' + document.querySelector('#preview').dataset.name : 'assets/balls/tennisball.png');
+
+                var startRequestOptions = {
+                    method: 'PUT',
+                    headers: startHeaders,
+                    body: startUrlencoded,
+                    redirect: 'follow'
+                };
+
+                fetch(saveGameUrl, startRequestOptions)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(result) {
+                    console.log(result);
+
+                    // Save the session Id
+                    game.sessionId = result.id;
+                })
+                .catch(error => console.log('error', error));
+
+                // Start the game
                 game.state.start('Game');
             }
         });

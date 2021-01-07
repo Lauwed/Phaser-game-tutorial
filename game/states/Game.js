@@ -135,6 +135,25 @@ Game.prototype = {
 
             // Game over
             if(this.ball.y <= 0) {
+                // Save status game over
+                var gameOverHeaders = new Headers();
+                gameOverHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+                var gameOverUrlencoded = new URLSearchParams();
+                gameOverUrlencoded.append("session_id", game.sessionId);
+
+                var gameOverRequestOptions = {
+                    method: 'PUT',
+                    headers: throwHeaders,
+                    body: throwUrlencoded,
+                    redirect: 'follow'
+                };
+
+                fetch(gameOverGameUrl, gameOverRequestOptions)
+                .then(response => response.json())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+
                 game.state.start('GameOver');
             }
             else if(this.game.physics.arcade.collide(this.ball, this.ground)) {
@@ -145,23 +164,69 @@ Game.prototype = {
                     // Win game
                     if(this.ball.body.velocity.x <= 0) {
                         score = parseInt((this.ball.x - this.ballRock.x)/100);
+
+                        // Save score and time
+                        var winHeaders = new Headers();
+                        winHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+                        var winUrlencoded = new URLSearchParams();
+                        winUrlencoded.append("total_time", (new Date ((new Date((new Date(new Date())).toISOString() )).getTime() - ((new Date()).getTimezoneOffset()*60000))).toISOString().slice(0, 19).replace('T', ' '));
+                        winUrlencoded.append("score", score);
+                        winUrlencoded.append("session_id", game.sessionId);
+
+                        var winRequestOptions = {
+                            method: 'POST',
+                            headers: winHeaders,
+                            body: winUrlencoded
+                        };
+
+                        fetch(winGameUrl, winRequestOptions)
+                        .then(response => response.json())
+                        .then(function(result) {
+                            game.session = result;
+                        })
+                        .catch(error => console.log('error', error));
+
                         this.game.state.start('LeaderBoard');
                     }
                 }
-                else if(this.ball.body.speed < this.BULLET_SPEED*0.6) { // If speed less than 60%
-                    console.log('60', this.ball.body.angle);
-                    friction = 0.5;
-
-                    this.ball.rotation -= 90 + this.ball.rotation*0.1;
-
-                    this.ball.body.velocity.y = Math.sin(this.ball.rotation) * this.ball.body.speed;
-                }
                 else {
-                    console.log(this.ball.body.speed, force, velocity.angle(this.ground, true));
-                    this.ball.rotation -= 90;
+                    // Save bounce
+                    var bounceHeaders = new Headers();
+                    bounceHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-                    this.ball.body.velocity.y = Math.sin(this.ball.rotation) * this.ball.body.speed;
+                    var bounceUrlencoded = new URLSearchParams();
+                    bounceUrlencoded.append("distance", (this.ball.x - this.ballRock.x)/100);
+                    bounceUrlencoded.append("session_id", game.sessionId);
+
+                    var bounceRequestOptions = {
+                        method: 'PUT',
+                        headers: bounceHeaders,
+                        body: bounceUrlencoded,
+                        redirect: 'follow'
+                    };
+
+                    fetch(bounceGameUrl, bounceRequestOptions)
+                    .then(response => response.json())
+                    .then(result => console.log(result))
+                    .catch(error => console.log('error', error));
+
+                    if(this.ball.body.speed < this.BULLET_SPEED*0.6) { // If speed less than 60%
+                        console.log('60', this.ball.body.angle);
+                        friction = 0.5;
+
+                        this.ball.rotation -= 90 + this.ball.rotation*0.1;
+
+                        this.ball.body.velocity.y = Math.sin(this.ball.rotation) * this.ball.body.speed;
+                    }
+                    else {
+                        console.log(this.ball.body.speed, force, velocity.angle(this.ground, true));
+                        this.ball.rotation -= 90;
+
+                        this.ball.body.velocity.y = Math.sin(this.ball.rotation) * this.ball.body.speed;
+                    }
                 }
+                
             }
         }
     
@@ -175,17 +240,58 @@ Game.prototype = {
         // Shoot a ball
         if (this.spaceKey.isDown) {
             if(isShoot) {
-                if(inputPower.value < 30) game.state.start('GameOver');
+                if(inputPower.value < 30) {
+                    // Save status game over
+                    var gameOverHeaders = new Headers();
+                    gameOverHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+                    var gameOverUrlencoded = new URLSearchParams();
+                    gameOverUrlencoded.append("session_id", game.sessionId);
+
+                    var gameOverRequestOptions = {
+                        method: 'PUT',
+                        headers: gameOverHeaders,
+                        body: gameOverUrlencoded,
+                        redirect: 'follow'
+                    };
+
+                    fetch(gameOverGameUrl, gameOverRequestOptions)
+                    .then(response => response.json())
+                    .then(result => console.log(result))
+                    .catch(error => console.log('error', error));
+
+                    game.state.start('GameOver');
+                }
                 clearInterval(game.forceVariation);
     
                 this.catapult.animations.play('run', 15, false);
                 this.shootball();
             }
             else {
-                if(inputAngle.value - 90 > 85) game.state.start('GameOver');
+                if(inputAngle.value - 90 > 85) {
+                    // Save status game over
+                    var gameOverHeaders = new Headers();
+                    gameOverHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+                    var gameOverUrlencoded = new URLSearchParams();
+                    gameOverUrlencoded.append("session_id", game.sessionId);
+
+                    var gameOverRequestOptions = {
+                        method: 'PUT',
+                        headers: gameOverHeaders,
+                        body: gameOverUrlencoded,
+                        redirect: 'follow'
+                    };
+
+                    fetch(gameOverGameUrl, gameOverRequestOptions)
+                    .then(response => response.json())
+                    .then(result => console.log(result))
+                    .catch(error => console.log('error', error));
+
+                    game.state.start('GameOver');
+                }
 
                 clearInterval(game.angleVariation);
-                console.log(inputAngle.value - 90);
     
                 clearInterval(game.forceVariation);
                 // The variation of the force
@@ -250,6 +356,60 @@ Game.prototype = {
         // Shoot it in the right direction
         this.ball.body.velocity.x = Math.cos(this.ball.rotation) * this.BULLET_SPEED;
         this.ball.body.velocity.y = Math.sin(this.ball.rotation) * this.BULLET_SPEED;
+
+        // Save throw
+        var throwHeaders = new Headers();
+        throwHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+        var throwUrlencoded = new URLSearchParams();
+        throwUrlencoded.append("time", (new Date ((new Date((new Date(new Date())).toISOString() )).getTime() - ((new Date()).getTimezoneOffset()*60000))).toISOString().slice(0, 19).replace('T', ' '));
+        throwUrlencoded.append("angle", this.ballRock.angle);
+        throwUrlencoded.append("power", this.BULLET_SPEED);
+        throwUrlencoded.append("session_id", game.sessionId);
+
+        var throwRequestOptions = {
+            method: 'PUT',
+            headers: throwHeaders,
+            body: throwUrlencoded,
+            redirect: 'follow'
+        };
+
+        fetch(throwGameUrl, throwRequestOptions)
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+
+        // Start time record
+        // Stock actual time
+        this.startTime = Date.now();
+        // Record time every 0.5 seconds
+        game.timeRecords = window.setInterval(function() {
+            // Get time elapsed
+            let timeElapsed = Math.floor(Date.now() - this.startTime / 1000);
+            console.log(timeElapsed, Date.now(), this.startTime);
+
+            // API Call
+            var flightHeaders = new Headers();
+            flightHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+            var flightUrlencoded = new URLSearchParams();
+            flightUrlencoded.append("time", (new Date ((new Date((new Date(new Date())).toISOString() )).getTime() - ((new Date()).getTimezoneOffset()*60000))).toISOString().slice(0, 19).replace('T', ' '));
+            flightUrlencoded.append("distance", parseInt((this.ball.x - this.ballRock.x)/100));
+            flightUrlencoded.append("speed", this.ball.body.speed);
+            flightUrlencoded.append("session_id", game.sessionId);
+
+            var flightRequestOptions = {
+                method: 'PUT',
+                headers: flightHeaders,
+                body: flightUrlencoded,
+                redirect: 'follow'
+            };
+
+            fetch(flightGameUrl, flightRequestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+        }.bind(this), 500);
     },
     howToPlayBox: function() {
         //call this line of code when you want to show the message box
@@ -312,19 +472,6 @@ Game.prototype = {
         okButton.events.onInputUp.add(function () { 
             // Hide the box
             this.hideBox();
-
-            // Start time record
-            // Stock actual time
-            this.startTime = Date.now();
-            // Record time every 0.5 seconds
-            game.timeRecords = window.setInterval(function() {
-                // Get time elapsed
-                let timeElapsed = Math.floor(Date.now() - this.startTime / 1000);
-                console.log(timeElapsed, Date.now(), this.startTime);
-
-                // API Call
-                // TODO
-            }.bind(this), 500);
 
             // Start interval
             // The variation of the angle
